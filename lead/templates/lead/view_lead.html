@@ -1,0 +1,28 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<br><br>
+<div class="col-md-6 offset-md-3">
+    <div class="card">
+        <div class="card-header">
+           <strong>{{ lead.name }}</strong>
+        </div>
+        <div class="card-body">
+            <p><strong>Name: </strong>{{ lead.name }}</p>
+            <p><strong>Email: </strong>{{ lead.email }}</p>
+            <p><strong>Description: </strong>{{ lead.description }}</p>
+            <p><strong>Priority: </strong>{{ lead.get_priority_display }}</p>
+            <p><strong>Status: </strong>{{ lead.get_status_display }}</p>
+            <p><strong>Created by: </strong>{{ lead.created_by }}</p>
+            <p><strong>Created at: </strong>{{ lead.created_at }}</p>
+            <p><strong>Modified at: </strong>{{ lead.modified_at }}</p>
+        </div>
+      </div>
+    
+      <br>
+      <a href="{% url 'leads_list' %}" class="btn btn-secondary">Leads</a>
+      <a href="{% url 'update_lead' lead.id %}" class="btn btn-secondary">Update</a>
+      <a href="{% url 'delete_lead' lead.id %}" class="btn btn-danger">Delete</a>
+</div>
+    
+{% endblock %}

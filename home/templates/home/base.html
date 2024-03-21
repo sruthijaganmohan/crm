@@ -16,10 +16,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
             {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+            </li>
+            <li>
+              <a class="nav-link" href="{% url 'add_lead' %}">Add lead</a>
+            </li>
+            <li>
+              <a class="nav-link" href="{% url 'leads_list' %}">Leads</a>
+            </li>
             <li>
               <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
@@ -35,6 +41,15 @@
         </div>
       </div>
     </nav>
+
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    {% endif %}
 
     {% block content %}
     {% endblock %}
