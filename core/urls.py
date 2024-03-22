@@ -23,5 +23,5 @@ urlpatterns = [
     path('', include('account.urls')),
     path('', include('dashboard.urls')),
     path('', include('lead.urls')),
-
+    path('', include('client.urls')),
 ]

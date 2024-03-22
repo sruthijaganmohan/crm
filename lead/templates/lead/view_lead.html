@@ -22,6 +22,7 @@
       <br>
       <a href="{% url 'leads_list' %}" class="btn btn-secondary">Leads</a>
       <a href="{% url 'update_lead' lead.id %}" class="btn btn-secondary">Update</a>
+      <a href="{% url 'convert_to_client' lead.id %}" class="btn btn-success">Convert</a>
       <a href="{% url 'delete_lead' lead.id %}" class="btn btn-danger">Delete</a>
 </div>
     

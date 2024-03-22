@@ -32,12 +32,10 @@ class Lead(models.Model):
     description = models.TextField(blank=True, null=True)
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default=MEDIUM)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NEW)
+    converted_to_client = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, related_name='leads', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ('name',)
 
     def __str__(self):
         return self.name
