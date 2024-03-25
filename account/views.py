@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Account
-from .forms import RegisterForm
+from .forms import RegisterForm, AccountForm
 
 # Create your views here.
 def register_user(request):
@@ -42,3 +43,17 @@ def logout_user(request):
     logout(request)
     messages.success(request, "Succesfully logged out")
     return redirect('home')
+
+@login_required
+def account(request):
+    acc = get_object_or_404(Account, user=request.user)
+    role = acc.role
+    if request.method == "POST":
+        form = AccountForm(request.POST, instance=acc)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Successfully updated role")
+            return redirect('home')
+    else:
+        form = AccountForm(instance=acc) 
+    return render(request, 'account/account.html', {'form': form, 'role':role})

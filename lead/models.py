@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
+from team.models import Team
 User = get_user_model()
 
 # Create your models here.
@@ -30,6 +30,7 @@ class Lead(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField()
     description = models.TextField(blank=True, null=True)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True)
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default=MEDIUM)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NEW)
     converted_to_client = models.BooleanField(default=False)

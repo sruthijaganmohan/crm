@@ -1,12 +1,13 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import Account
 
 class RegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username',  'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
@@ -30,3 +31,8 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'confirm password'
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'	
+
+class AccountForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ('role',)

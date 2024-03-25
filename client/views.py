@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import AddClientForm
 from .models import Client
+from team.models import Team
+from account.models import Account
 
 # Create your views here.
 @login_required
@@ -22,6 +24,8 @@ def add_client(request):
         if form.is_valid():
             client = form.save(commit=False)
             client.created_by = request.user
+            acc = get_object_or_404(Account, user=request.user)
+            client.team = acc.team
             client.save()
             messages.success(request, "Successfully created client")
             return redirect('clients_list')
