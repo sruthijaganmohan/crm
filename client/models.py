@@ -16,3 +16,10 @@ class Client(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Comment(models.Model):
+    content = models.TextField(blank=True, null=True) 
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='client_comments', null=True, blank=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, blank=True)
+    created_by = models.ForeignKey(User, related_name='client_comments', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)

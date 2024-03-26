@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import AddLeadForm
-from .models import Lead
+from .forms import AddLeadForm, AddCommentForm
+from .models import Lead, Comment
 from account.models import Account
 from client.models import Client
 from team.models import Team
@@ -15,8 +15,22 @@ def leads_list(request):
 
 @login_required
 def view_lead(request, pk):
-    lead = get_object_or_404(Lead, created_by=request.user, pk=pk)
-    return render(request, 'lead/view_lead.html', {'lead':lead})
+    lead = get_object_or_404(Lead, pk=pk)
+    team = lead.team
+    comments = Comment.objects.filter(team=team)
+    if request.method == "POST":
+        form = AddCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.created_by = request.user
+            comment.lead = lead
+            comment.team = lead.team
+            comment.save()
+            messages.success(request, "Successfully added comment")
+            return redirect('dashboard')
+    else:
+        form = AddCommentForm()
+    return render(request, 'lead/view_lead.html', {'lead':lead, 'comments':comments, 'form':form})
 
 @login_required
 def add_lead(request):

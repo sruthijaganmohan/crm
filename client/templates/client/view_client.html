@@ -23,5 +23,23 @@
       <a href="{% url 'update_client' client.id %}" class="btn btn-secondary">Update</a>
       <a href="{% url 'delete_client' client.id %}" class="btn btn-danger">Delete</a>
 </div>
+
+<div class="col-md-6 offset-md-3">
+  <form method="POST" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    <button type="submit" class="btn btn-secondary">Comment</button>
+  </form>
+</div>
+
+<div class="col-md-6 offset-md-3">
+  {% for comment in comments %}
+  <div>
+      <p>{{ comment.content }}</p> <p>{{ comment.created_by }}</p> <br>
+  </div>
+  {% endfor %}
+</div>
+  
     
 {% endblock %}

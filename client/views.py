@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import AddClientForm
-from .models import Client
+from .forms import AddClientForm, AddCommentForm
+from .models import Client, Comment
 from team.models import Team
 from account.models import Account
 
@@ -14,8 +14,22 @@ def clients_list(request):
 
 @login_required
 def view_client(request, pk):
-    client = get_object_or_404(Client, created_by=request.user, pk=pk)
-    return render(request, 'client/view_client.html', {'client':client})
+    client = get_object_or_404(Client, pk=pk)
+    team = client.team
+    comments = Comment.objects.filter(team=team)
+    if request.method == "POST":
+        form = AddCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.created_by = request.user
+            comment.client = client
+            comment.team = client.team
+            comment.save()
+            messages.success(request, "Successfully added comment")
+            return redirect('dashboard')
+    else:
+        form = AddCommentForm()
+    return render(request, 'client/view_client.html', {'client':client, 'comments':comments, 'form':form})
 
 @login_required
 def add_client(request):

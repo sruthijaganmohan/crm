@@ -2,6 +2,75 @@
 
 {% block content %}
 
-<h1>dashboard</h1>
+<div>
+    <h4>
+        Leads
+        <small class="text-body-secondary">Team</small>
+    </h4>
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Created by</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lead in leads %}
+            <tr>
+                <td><a href="{% url 'view_lead' lead.id %}">{{ lead.name }}</a></td>
+                <td>{{ lead.created_by }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h4>
+        Clients
+        <small class="text-body-secondary">Team</small>
+    </h4>
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Created by</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td><a href="{% url 'view_client' client.id %}">{{ client.name }}</a></td>
+                <td>{{ client.created_by }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <strong>My leads</strong><br><br>
+                    {% for lead in my_leads %}
+                        {{ lead.name }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <strong>My clients</strong><br><br>
+                    {% for client in my_clients %}
+                        {{ client.name }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
     
 {% endblock %}
