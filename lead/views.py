@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import AddLeadForm, AddCommentForm
-from .models import Lead, Comment
+from .forms import AddLeadForm, AddCommentForm, ContactForm
+from .models import Lead, Comment, Contact
 from account.models import Account
 from client.models import Client
 from team.models import Team
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 @login_required
@@ -78,5 +80,27 @@ def convert_to_client(request, pk):
     lead.save()
     messages.success(request, "Lead converted to client")
     return redirect('leads_list')
+
+@login_required
+def contact_lead(request, pk):
+    lead = get_object_or_404(Lead, created_by=request.user, pk=pk)
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            contact = form.save(commit=False)
+            contact.subject = request.POST['subject']
+            contact.email = lead.email
+            contact.content = request.POST['content']
+            contact.save()
+            send_mail(
+                contact.subject,
+                contact.content,
+                'settings.EMAIL_HOST_USER',
+                [contact.email],
+                fail_silently=False
+            )
+    else:
+        form = ContactForm()
+    return render(request, 'lead/contact_lead.html', {'form':form})
 
 

@@ -21,26 +21,29 @@
     </div>
     
     <br>
-    <a href="{% url 'leads_list' %}" class="btn btn-secondary">Leads</a>
+    <a href="{% url 'contact_lead' lead.id %}" class="btn btn-secondary">Contact</a>
     <a href="{% url 'update_lead' lead.id %}" class="btn btn-secondary">Update</a>
     <a href="{% url 'convert_to_client' lead.id %}" class="btn btn-success">Convert</a>
     <a href="{% url 'delete_lead' lead.id %}" class="btn btn-danger">Delete</a>
 </div>
+<br><br>
 
 <div class="col-md-6 offset-md-3">
     <form method="POST" action="">
         {% csrf_token %}
         {{ form.as_p }}
-        <br>
         <button type="submit" class="btn btn-secondary">Comment</button>
     </form>
-</div>
+</div><br><hr><br>
 
 <div class="col-md-6 offset-md-3">
     {% for comment in comments %}
-    <div>
-        <p>{{ comment.content }}</p> <p>{{ comment.created_by }}</p> <br>
-    </div>
+    <div class="card">
+        <div class="card-body">
+            <button class="btn btn-light">{{ comment.created_by }}&nbsp;&nbsp;{{ comment.created_at }}</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            {{ comment.content }}
+        </div>
+    </div><br>
     {% endfor %}
 </div>
     

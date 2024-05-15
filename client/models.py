@@ -23,3 +23,10 @@ class Comment(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, blank=True)
     created_by = models.ForeignKey(User, related_name='client_comments', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+class Contact(models.Model):
+    subject = models.CharField(max_length=1000)
+    content = models.TextField(blank=True, null=True) 
+
+    def __str__(self):
+        return self.subject

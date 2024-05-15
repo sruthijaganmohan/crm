@@ -4,14 +4,14 @@
 
 <br><br>
 <div class="col-md-6 offset-md-3">
-  <h1>Account</h1>
+  <p class="h3">Account</p><br>
+
   <form method="POST" action="">
     {% csrf_token %}
     {{ form.as_p }}
-    <br>
     <button type="submit" class="btn btn-secondary">Update role</button>
   </form>
-  <br>
+  <br><hr>
   {% if role == 'MANAGER' %}
   <button class="btn btn-secondary"><a class="nav-link" href="{% url 'create_team' %}">Create team</a></button>
   {% endif %}

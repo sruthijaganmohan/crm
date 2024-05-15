@@ -4,8 +4,7 @@
 
 <div>
     <h4>
-        Leads
-        <small class="text-body-secondary">Team</small>
+        <small class="text-body-secondary">Team leads</small>
     </h4>
     <table class="table table-hover table-bordered">
         <thead class="table-dark">
@@ -24,8 +23,7 @@
         </tbody>
     </table>
     <h4>
-        Clients
-        <small class="text-body-secondary">Team</small>
+        <small class="text-body-secondary">Team clients</small>
     </h4>
     <table class="table table-hover table-bordered">
         <thead class="table-dark">
@@ -43,7 +41,7 @@
             {% endfor %}
         </tbody>
     </table>
-</div>
+</div><br><hr><br>
 
 
 <div class="container">
@@ -56,9 +54,7 @@
                         {{ lead.name }}
                     {% endfor %}
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6">
+            </div><br>
             <div class="card">
                 <div class="card-body">
                     <strong>My clients</strong><br><br>
@@ -68,9 +64,19 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <strong>Number of leads: </strong>
+                    {{ my_leads|length }} <br>
+                    <strong>Number of clients: </strong>
+                    {{ my_clients|length }}
+                </div>
+            </div><br>
         </div>
     </div>
-</div>
+</div><br><br>
+
 
     
 {% endblock %}

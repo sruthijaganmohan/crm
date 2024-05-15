@@ -36,3 +36,11 @@ class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
         fields = ('role',)
+
+    def __init__(self, *args, **kwargs):
+        super(AccountForm, self).__init__(*args, **kwargs)
+
+        self.fields['role'].widget.attrs['class'] = 'form-control'
+        self.fields['role'].widget.attrs['placeholder'] = 'role'
+        self.fields['role'].label = ''
+        self.fields['role'].help_text = '<span class="form-text text-muted"><small>Choose your role - Manager/Asscociate</small></span>'
