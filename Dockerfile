@@ -18,11 +18,11 @@ ENV PYTHONUNBUFFERED 1
 
 # Install OS dependencies for our mini VM
 RUN apt-get update && apt-get install -y \
-    default-libmysqlclient-dev \  # Required for mysqlclient
-    libpq-dev \                    # For postgres
-    libjpeg-dev \                  # For Pillow
-    libcairo2 \                    # For CairoSVG
-    gcc \                          # For compiling C extensions
+    default-libmysqlclient-dev \ 
+    libpq-dev \                   
+    libjpeg-dev \                 
+    libcairo2 \                    
+    gcc \                          
     && rm -rf /var/lib/apt/lists/*
 
 # Create the mini VM's code directory
