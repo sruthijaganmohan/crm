@@ -110,7 +110,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'whitepeakcrm',
+        'NAME': 'whitepeakcrm_railway',
         'USER': 'root',
         'PASSWORD': 'qeUbVYJltJWcWeNcTSjkYqEvrZDXnYGw',
         'HOST': 'mysql.railway.internal',
