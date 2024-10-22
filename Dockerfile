@@ -38,7 +38,7 @@ COPY requirements.txt /tmp/requirements.txt
 COPY . /code
 
 # Install the Python project requirements
-RUN pip install --no-cache-dir -r /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
 
 # Database isn't available during build
 # Run any other commands that do not need the database
