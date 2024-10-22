@@ -62,6 +62,10 @@ INSTALLED_APPS = [
     'team',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://crm-production-6410.up.railway.app',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
