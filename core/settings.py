@@ -112,8 +112,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'whitepeakcrm',
         'USER': 'root',
-        'PASSWORD': 'Ughbhsy#017',
-        'HOST': 'localhost',
+        'PASSWORD': 'qeUbVYJltJWcWeNcTSjkYqEvrZDXnYGw',
+        'HOST': 'mysql.railway.internal',
         'PORT': '3306',
     }
 }
