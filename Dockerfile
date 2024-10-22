@@ -1,7 +1,5 @@
-# Set the python version as a build-time argument
-# with Python 3.11 as the default
-ARG PYTHON_VERSION=3.11.5-slim-bullseye
-FROM python:${PYTHON_VERSION}
+# Use a larger base image for more pre-installed packages
+FROM python:3.11
 
 # Create a virtual environment
 RUN python -m venv /opt/venv
@@ -16,13 +14,14 @@ RUN pip install --upgrade pip
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Install OS dependencies for our mini VM
+# Install OS dependencies
 RUN apt-get update && apt-get install -y \
-    default-libmysqlclient-dev \ 
-    libpq-dev \                   
-    libjpeg-dev \                 
-    libcairo2 \                    
-    gcc \                          
+    default-libmysqlclient-dev \
+    libpq-dev \
+    libjpeg-dev \
+    libcairo2 \
+    gcc \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 # Create the mini VM's code directory
@@ -38,12 +37,7 @@ COPY requirements.txt /tmp/requirements.txt
 COPY . /code
 
 # Install the Python project requirements
-RUN pip install -r /tmp/requirements.txt
-
-# Database isn't available during build
-# Run any other commands that do not need the database
-# such as:
-# RUN python manage.py collectstatic --noinput
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 # Set the Django default project name
 ARG PROJ_NAME="core"
@@ -56,12 +50,6 @@ RUN printf "#!/bin/bash\n" > ./paracord_runner.sh && \
 
 # Make the bash script executable
 RUN chmod +x paracord_runner.sh
-
-# Clean up apt cache to reduce image size
-RUN apt-get remove --purge -y && \
-    apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 # Run the Django project via the runtime script when the container starts
 CMD ["./paracord_runner.sh"]
